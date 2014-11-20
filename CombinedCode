@@ -1,0 +1,99 @@
+/* PRESSUREPLATE/BUTTON CODE
+  Button
+ 
+ Turns on and off a light emitting diode(LED) connected to digital  
+ pin 13, when pressing a pushbutton attached to pin 2. 
+ 
+ 
+ The circuit:
+ * LED attached from pin 13 to ground 
+ * pushbutton attached to pin 2 from +5V
+ * 10K resistor attached to pin 2 from ground
+ 
+ * Note: on most Arduinos there is already an LED on the board
+ attached to pin 13.
+ 
+ 
+ created 2005
+ by DojoDave <http://www.0j0.org>
+ modified 30 Aug 2011
+ by Tom Igoe
+ 
+ This example code is in the public domain.
+ 
+ http://www.arduino.cc/en/Tutorial/Button
+ */
+
+// constants won't change. They're used here to 
+// set pin numbers:
+const int buttonPin = 2;     // the number of the pushbutton pin
+const int ledPin =  13;      // the number of the LED pin
+
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+
+void setup() {
+  // initialize the LED pin as an output:
+  pinMode(ledPin, OUTPUT);      
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);     
+}
+
+void loop(){
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {     
+    // turn LED on:    
+    digitalWrite(ledPin, HIGH);  
+  } 
+  else {
+    // turn LED off:
+    digitalWrite(ledPin, LOW); 
+  }
+}
+IR SENSORS
+/* Arduino Sensor Project
+*
+* Name: Infrared Obstacle Avoidance Sensor
+*
+* Description: Using an IR obstacle sensor, a stepper motor
+* switches direction and an led lights up when
+* an obstacle is detected. Interrupt is used to
+* read sensor asynchronously and act on the reading
+*
+* Author: Amar Bhatt
+*
+*/
+//Notes: the EN pin on the sensor is active LOW
+// the OUTPUT is active LOW
+// if there is a jumper pin between the EN and VR1
+// then EN does not need to be connected
+//Include stepper motor library
+#include <Stepper.h>
+// Define Constants
+const int stepsPerRevolution = 200; // change this to fit the number of steps per revolution
+// for your motor
+const int ledPin = 7; //Pin for the LED control
+const int senPin = 2; //Pin for the sensor
+volatile int dir = 1; //Direction, 1 = forward, -1 = backward
+// initialize the stepper library on pins 8 through 11:
+Stepper myStepper(stepsPerRevolution, 8,9,10,11);
+void setup(){
+pinMode(ledPin, OUTPUT);
+attachInterrupt(0, switchDirection, CHANGE); //Set intterupt on change
+// set the speed at 60 rpm:
+myStepper.setSpeed(60);
+}
+void loop(){
+Serial.println("clockwise");
+myStepper.step(dir*stepsPerRevolution);
+}
+//Interrupt function
+void switchDirection() {
+int reading = digitalRead(senPin);
+dir = (reading == HIGH) ? -1 : 1;
+digitalWrite(ledPin, !reading);
+}
