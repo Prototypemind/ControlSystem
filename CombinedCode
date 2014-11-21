@@ -97,3 +97,37 @@ int reading = digitalRead(senPin);
 dir = (reading == HIGH) ? -1 : 1;
 digitalWrite(ledPin, !reading);
 }
+IR ALT CODE
+int receiverPin = 12; // input from the ir receiver.
+
+unsigned long duration; // time shutter is open
+
+void setup()
+{
+  pinMode(receiverPin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  //digitalWrite(ledPin, !digitalRead(receiverPin)) ;
+  duration = pulseIn(receiverPin, LOW);
+  if (duration = 0 )
+    digitalWrite(ledPin,LOW); 
+   // do stuff if the condition is true
+} else {
+    LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
+
+    void setup()
+{
+  lcd.begin(16,1);
+  lcd.print("ALERT!");
+}
+
+void loop() {}
+   // do stuff if the condition is false
+}
+  {
+    Serial.println(duration);
+  }
+}
