@@ -1,0 +1,37 @@
+//LCD Pressure Plate
+const int button1Pin = 2;  // pushbutton 1 pin
+const int ledPin =  13;    // LED pin
+#include <SoftwareSerial.h>
+SoftwareSerial display(3, 2);
+
+void setup()
+{
+  // Set up the pushbutton pins to be an input:
+  pinMode(button1Pin, INPUT);
+
+  // Set up the LED pin to be an output:
+  pinMode(ledPin, OUTPUT);      
+}
+
+
+void loop()
+{
+  int button1State, button2State;  // variables to hold the pushbutton states
+
+  button1State = digitalRead(button1Pin);
+   
+  if (((button1State == LOW) || (button2State == LOW))  // if we're pushing button 1 OR button 2
+      && !                                               // AND we're NOT
+      ((button1State == LOW) && (button2State == LOW))) // pushing button 1 AND button 2
+                                                        // then...
+  {
+    Serial.println("Motion Detected!");
+    display.write("Motion Detected!");
+    delay(0);
+  }
+     else {
+      Serial.println("All Quiet...");
+      display.write("All Quiet... ");
+      delay(50);
+}
+}
