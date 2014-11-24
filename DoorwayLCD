@@ -1,4 +1,4 @@
-// Doorway
+// Doorway gated by IR Pathway Sensors
 #include <SoftwareSerial.h>
 SoftwareSerial display(3, 2);
 const int irPin = 4;
