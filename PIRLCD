@@ -1,4 +1,4 @@
-// PIR example
+// PIR Located in Interior Area
 #include <SoftwareSerial.h>
 SoftwareSerial display(3, 2);
 const int pirPin = 4;
