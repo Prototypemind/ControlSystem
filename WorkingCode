@@ -105,15 +105,16 @@ void setup()
           //Push Button End
           
          }
-        }  
-   int pirVal = digitalRead(pirPin);
-if(pirVal == LOW){ //was motion detected
-Serial.println("Motion Detected!");
-digitalWrite(ledPin , HIGH);
-delay(200);
-} else {
-Serial.println("All Quiet Motion...");
-digitalWrite(ledPin, LOW);
-delay(200);
+		int pirVal = digitalRead(pirPin);
+		if(pirVal == LOW){ //was motion detected
+		Serial.println("Motion Detected!");
+		digitalWrite(ledPin , HIGH);
+		delay(200);
+		} else {
+		Serial.println("All Quiet Motion...");
+		digitalWrite(ledPin, LOW);
+		delay(200);
 }
-}     
+        }  //end of while 
+   
+}
