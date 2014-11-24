@@ -25,8 +25,8 @@ void loop()
       ((button1State == LOW) && (button2State == LOW))) // pushing button 1 AND button 2
                                                         // then...
   {
-    Serial.println("Motion Detected!");
-    display.write("Motion Detected!");
+    Serial.println("Pressure Sensor!");
+    display.write("Pressure Sensor!");
     delay(0);
   }
      else {
