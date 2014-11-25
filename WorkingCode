@@ -81,12 +81,18 @@ delay(1000);
 finger=true;
 break;
 case 2:
-Serial.println("Who dat?");
+Serial.println("Who goes there?");
 finger=true;
 break;
 case 3:
-Serial.println(" Yo Carley! ");
-mySerial.write("Yo Carley!");
+Serial.println("Welcome Carley! ");
+mySerial.write("Welcome Carley!");
+delay(1000);
+finger=true;
+break;
+case 4:
+Serial.println("Hello Cage! ");
+mySerial.write("Hello Cage!");
 delay(1000);
 finger=true;
 break;
