@@ -1,29 +1,29 @@
 /*
-FPS_Enroll.ino - Library example for controlling the GT-511C3 Finger Print Scanner (FPS)
-Created by Josh Hawley, July 23rd 2013
-Licensed for non-commercial use, must include this license message
-basically, Feel free to hack away at it, but just give me credit for my work =)
-TLDR; Wil Wheaton's Law
-This sketch will attempt to identify a previously enrolled fingerprint.
+Vector Operative Logistics and Security - Monitoring Station
+Team Members:
+Eric Hampton, Carley Horton, Kalonji Woods, Cage Spoden
+
+Source code contributions:
+FPS_Enroll.ino, FPS_IDFinger.ino Created by Josh Hawley
+FPSGarageDoorOpenner.ino by Nodcah
+Sparkfun
+
 */
 #include "FPS_GT511C3.h"
 #include "SoftwareSerial.h"
-// Hardware setup - FPS connected to:
-// digital pin 4(arduino rx, fps tx)
-// digital pin 5(arduino tx - 560ohm resistor fps tx - 1000ohm resistor - ground)
-// this brings the 5v tx line down to about 3.2v so we dont fry our fps
 FPS_GT511C3 fps(4, 5);
-const int button1Pin = 2;
+const int button1Pin = 6;
 const int ledPin = 13;
-SoftwareSerial display(4, 3);
-const int pirPin = 6;
-const int irPin = 7;
+SoftwareSerial mySerial(3, 2);
+const int pirPin = 7;
+const int irPin = 8;
 const int sensorPin = 0;
 
 
 void setup()
 {
 Serial.begin(9600);
+mySerial.begin(9600);
 delay(100);
 fps.Open();
 fps.SetLED(true);
@@ -32,6 +32,11 @@ pinMode(ledPin, OUTPUT);
 pinMode(pirPin, INPUT);
 pinMode(irPin, INPUT);
 Serial.println("Press Finger");
+mySerial.write(254); // move cursor to beginning of first line
+mySerial.write(128);
+mySerial.write("                 "); // clear mySerial
+mySerial.write("                 ");
+mySerial.write("System Off");
 delay(3000);
 }
 void loop()
@@ -48,14 +53,31 @@ fps.CaptureFinger(false);
 int id = fps.Identify1_N();
 if (id <5)
 {
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
 Serial.println("Access Granted:");
+mySerial.write("Access Granted");
+delay(1000);
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
+  delay(500);
 switch(id){
 case 0:
-Serial.println(" Hi Kalonji! ");
+Serial.println("Hi Kalonji! ");
+mySerial.write("Hi Kalonji!");
+delay(1000);
 finger=true;
 break;
 case 1:
 Serial.println(" Hey Eric! ");
+mySerial.write("Hey Eric!");
+delay(1000);
 finger=true;
 break;
 case 2:
@@ -64,14 +86,30 @@ finger=true;
 break;
 case 3:
 Serial.println(" Yo Carley! ");
+mySerial.write("Yo Carley!");
+delay(1000);
 finger=true;
 break;
 }
 }
 else
 {
-Serial.println("Finger not found");
-Serial.println("Press Finger");
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
+  Serial.println("Finger not found");
+  mySerial.write("404 Error!");
+  mySerial.write("Finger not found");
+  delay(5000);
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
+  Serial.println("Press Finger");
+  mySerial.write("System Off");
 }
 }
 delay(1000);
@@ -81,47 +119,52 @@ int button1State;
 button1State = digitalRead(button1Pin);
 if (((button1State == LOW)))
 {
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
 Serial.println("Pressure Sensor!");
+mySerial.write("Pressure Sensor!");
 digitalWrite(ledPin , HIGH);
-delay(200);
+delay(3000);
 }
 else {
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
 Serial.println("All Quiet...");
+mySerial.write("All Quiet...");
 digitalWrite(ledPin, LOW);
-delay(50);
+delay(1000);
 //Push Button End
 }
-//int pirVal = digitalRead(pirPin);
-//if(pirVal == LOW){ //was motion detected
-//Serial.println("Motion Detected!");
-//digitalWrite(ledPin , HIGH);
-//delay(500);
-//} else {
-//Serial.println("All Quiet Motion...");
-//digitalWrite(ledPin, LOW);
-//delay(50);
-//}
-//int val = digitalRead(irPin);
-//if(val){
-//Serial.println("All Quiet Doorway...");
-//digitalWrite(ledPin, LOW); }
-//else {
-//Serial.println("Intruder: Doorway!");
-//digitalWrite(ledPin, HIGH);
-//delay(100);
-//}
-
 
 int val =0;
 val= analogRead(sensorPin);
 if(val>500){
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
   digitalWrite(ledPin, HIGH);
-  Serial.println("Case Housing Open!");
-  delay(200);
+  Serial.println("Case Housing!");
+  mySerial.write("Case Housing!");
+  delay(3000);
 }else{
+  mySerial.write("                 "); // clear mySerial
+  mySerial.write("                 ");
+  delay(100);
+  mySerial.write(254); // move cursor to beginning of first line
+  mySerial.write(128);
   digitalWrite(ledPin, LOW);
   Serial.println("All Quiet...");
-  delay(50);
+  mySerial.write("All Quiet...");
+  delay(1000);
 } 
 }
 }//end of while
+//Special thanks to Professor Schleter, Jared Bell, and Christopher Maseo for 3d Printing & Troubleshooting
