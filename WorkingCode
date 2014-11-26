@@ -133,7 +133,7 @@ if (((button1State == LOW)))
 Serial.println("Pressure Sensor!");
 mySerial.write("Pressure Sensor!");
 digitalWrite(ledPin , HIGH);
-delay(3000);
+delay(5000);
 }
 else {
   mySerial.write("                 "); // clear mySerial
@@ -144,7 +144,7 @@ else {
 Serial.println("All Quiet...");
 mySerial.write("All Quiet...");
 digitalWrite(ledPin, LOW);
-delay(1000);
+delay(500);
 //Push Button End
 }
 
@@ -159,7 +159,7 @@ if(val>500){
   digitalWrite(ledPin, HIGH);
   Serial.println("Case Housing!");
   mySerial.write("Case Housing!");
-  delay(3000);
+  delay(5000);
 }else{
   mySerial.write("                 "); // clear mySerial
   mySerial.write("                 ");
@@ -169,7 +169,7 @@ if(val>500){
   digitalWrite(ledPin, LOW);
   Serial.println("All Quiet...");
   mySerial.write("All Quiet...");
-  delay(1000);
+  delay(500);
 } 
 }
 }//end of while
