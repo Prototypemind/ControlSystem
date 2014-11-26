@@ -12,8 +12,8 @@ Sparkfun
 #include "FPS_GT511C3.h"
 #include "SoftwareSerial.h"
 //VARS
-//the time we give the PIR sensor to calibrate (10-60 secs according to the datasheet)
-int calibrationTime = 30;        
+//the time we give the sensor to calibrate (10-60 secs according to the datasheet)
+int calibrationTime = 10;        
 
 //the time when the sensor outputs a low impulse
 long unsigned int lowIn;         
@@ -200,15 +200,15 @@ if(val>500){
   delay(500);
 } 
 if(
-digitalRead(pirPin) == HIGH)
+digitalRead(pirPin == HIGH))
 {
   mySerial.write(254); // move cursor to beginning of first line
   mySerial.write(128);
   mySerial.write(" "); // clear mySerial
   mySerial.write(" ");
   digitalWrite(ledPin, HIGH);
-  Serial.println("Motion detected!"); 
-  mySerial.write("Motion Detected!");
+  Serial.println("Motion: Interior!"); 
+  mySerial.write("Motion: Interior!");
   delay(2500);
 }else{
   mySerial.write(254); // move cursor to beginning of first line
